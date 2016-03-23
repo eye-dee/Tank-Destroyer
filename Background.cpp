@@ -1,31 +1,17 @@
-#include "Tank.h"
-#include <glut.h>
-#include <math.h>
-
+#include "Background.h"
 #include "lodepng.h"
+#include <glut.h>
 
-Tank::Tank() : x(350.0),
-	y(0.0),
-	z(600.0),
-	V(0.01),
-	fileName("tank.png"),
-	angle(PI/4.0),
-	a(5.0)
+
+Background::Background() : fileName("back.png")
 {
 }
 
-Tank::Tank(double setX, double setY, double setZ) : x(setX),
-	y(setY),
-	z(setZ)
+Background::~Background()
 {
 }
 
-
-Tank::~Tank()
-{
-}
-
-void Tank :: load()
+void Background :: load()
 {
 	unsigned char* data;
 	unsigned width, height;
@@ -38,16 +24,12 @@ void Tank :: load()
 	delete data;
 }
 
-void Tank :: draw() const
+void Background :: draw()
 {
-	glPushMatrix();
-
-	glTranslated(x,y,0.0);
-
-	auto hScaled = (max-z)/max*tankH;
-	glScaled(100*a,hScaled,a);
-
 	int X1 = 0,Y1 = 0,X2= 1,Y2 = 1, Z = 1.0;
+
+	glPushMatrix();
+	glTranslated(0.0,0.0,-1.0);
 
 	glEnable( GL_TEXTURE_2D );
 	glEnable(GL_BLEND);
@@ -60,9 +42,9 @@ void Tank :: draw() const
 	glBegin( GL_QUADS );
 
 	glTexCoord2f(X1,Y2); glVertex2f(0.0,0.0);
-	glTexCoord2f(X1,Y1); glVertex2f(0.0,1.0);
-	glTexCoord2f(X2,Y1); glVertex2f(1.0,1.0);
-	glTexCoord2f(X2,Y2); glVertex2f(1.0,0.0);
+	glTexCoord2f(X1,Y1); glVertex2f(0.0,2.7);
+	glTexCoord2f(X2,Y1); glVertex2f(1000.0,2.7);
+	glTexCoord2f(X2,Y2); glVertex2f(1000.0,0.0);
 	glEnd();
 
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
@@ -71,15 +53,4 @@ void Tank :: draw() const
 	glDisable(GL_TEXTURE_2D);
 
 	glPopMatrix();
-}
-
-void Tank ::forward()
-{
-	x += V*cos(angle);
-	z -= V*sin(angle);
-}
-void Tank ::backward()
-{
-	x -= V*cos(angle);
-	z += V*sin(angle);
 }

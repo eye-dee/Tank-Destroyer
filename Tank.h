@@ -12,9 +12,14 @@ public:
 
 	void forward();
 	void backward();
+
+	void load();
 private:
 	double x,y,z;
 	double V;
+
+	const char* fileName;
+	unsigned person;
 
 	double angle;
 	//temp

@@ -1,19 +1,3 @@
-//
-// File:        mycube.c
-// Author:      Matt Daisley
-// Created:     4/25/2012
-// Project:     Source code for Make a Cube in OpenGL
-// Description: Creates an OpenGL window and draws a 3D cube
-//              That the user can rotate using the arrow keys
-// 
-// Controls:    Left Arrow  - Rotate Left
-//              Right Arrow - Rotate Right
-//              Up Arrow    - Rotate Up
-//              Down Arrow  - Rotate Down     
-
-// ----------------------------------------------------------
-// Includes
-// ----------------------------------------------------------
 #include <stdio.h>
 #include <stdarg.h>
 #include <math.h>
@@ -26,9 +10,12 @@
 #endif
 
 #include <vector>
+#include <Windows.h>
 #include "const.h"
 #include "Tank.h"
+#include "Background.h"
 
+BackgroundPointer b = BackgroundPointer(new Background());
 TankPointer t = TankPointer(new Tank());
 
 // ----------------------------------------------------------
@@ -58,11 +45,12 @@ void display(){
 	keyPress();
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
+	b->draw();
 	t->draw();
 
 	//glFlush();
 	glutSwapBuffers();
-
+	//Sleep(100);
 }
 
 void key(unsigned char key, int x, int y){
@@ -71,9 +59,6 @@ void key(unsigned char key, int x, int y){
 void keyUp(unsigned char key, int x, int y){
 	KeyDown[key] = 0;
 }
-// ----------------------------------------------------------
-// specialKeys() Callback Function
-// ----------------------------------------------------------
 void keyPress() 
 {
 //  Right arrow - increase rotation by 5 degree
@@ -96,9 +81,16 @@ void keyPress()
 		t->backward();
 }
 
-// ----------------------------------------------------------
-// main() function
-// ----------------------------------------------------------
+void Init()
+{
+	glOrtho(0.0,1000.0,0.0,2.7,0.0,1000.0);
+	//  Enable Z-buffer depth test
+	glEnable(GL_DEPTH_TEST);
+
+	t->load();
+	b->load();
+}
+
 int main(int argc, char* argv[]){
 
 	//  Initialize GLUT and process user parameters
@@ -112,9 +104,7 @@ int main(int argc, char* argv[]){
 	// Create window
 	glutCreateWindow("Awesome Cube");
 
-	glOrtho(0.0,1000.0,0.0,2.7,0.0,1000.0);
-	//  Enable Z-buffer depth test
-	glEnable(GL_DEPTH_TEST);
+	Init();
 
 	// Callback functions
 	glutDisplayFunc(display);
