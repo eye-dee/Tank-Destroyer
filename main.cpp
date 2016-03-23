@@ -91,9 +91,9 @@ void keyPress()
 		rotate_x -= 0.1;
 
 	else if (KeyDown['w'])
-		startZ += 0.1;
+		t->forward();
 	else if (KeyDown['s'])
-		startZ -= 0.1;
+		t->backward();
 }
 
 // ----------------------------------------------------------
@@ -109,12 +109,10 @@ int main(int argc, char* argv[]){
 	glutInitWindowSize(1024,640);				
 	glutInitWindowPosition(100,50);	
 
-	//gluOrtho2D(-5.0,5.0,-5.0,5.0);
-
 	// Create window
 	glutCreateWindow("Awesome Cube");
 
-	glOrtho(-500.0,500.0,-15.0,15.0,-500.0,500.0);
+	glOrtho(0.0,1000.0,0.0,2.7,0.0,1000.0);
 	//  Enable Z-buffer depth test
 	glEnable(GL_DEPTH_TEST);
 

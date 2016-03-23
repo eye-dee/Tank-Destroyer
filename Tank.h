@@ -1,4 +1,6 @@
 #pragma once
+#include "const.h"
+
 class Tank
 {
 public:
@@ -8,8 +10,11 @@ public:
 
 	void draw() const;
 
+	void forward();
+	void backward();
 private:
 	double x,y,z;
+	double V;
 
 	double angle;
 	//temp
