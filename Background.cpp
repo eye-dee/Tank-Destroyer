@@ -1,7 +1,9 @@
 #include "Background.h"
 #include "lodepng.h"
+#include <iostream>
 #include <glut.h>
-
+#include <algorithm>
+#include <math.h>
 
 Background::Background() : fileName("back.png")
 {
@@ -16,6 +18,7 @@ void Background :: load()
 	unsigned char* data;
 	unsigned width, height;
 	person = lodepng_decode32_file(&data, &width, &height, fileName);
+
 	glGenTextures(1,&person);
 	glBindTexture(GL_TEXTURE_2D,person);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -26,7 +29,7 @@ void Background :: load()
 
 void Background :: draw()
 {
-	int X1 = 0,Y1 = 0,X2= 1,Y2 = 1, Z = 1.0;
+	double X1 = 0.0,Y1 = 0,X2= 1,Y2 = 1, Z = 1.0;
 
 	glPushMatrix();
 	glTranslated(0.0,0.0,-1.0);
@@ -41,10 +44,10 @@ void Background :: draw()
 	glPixelStorei( GL_UNPACK_ALIGNMENT, 1 ); 
 	glBegin( GL_QUADS );
 
-	glTexCoord2f(X1,Y2); glVertex2f(0.0,0.0);
-	glTexCoord2f(X1,Y1); glVertex2f(0.0,2.7);
-	glTexCoord2f(X2,Y1); glVertex2f(1000.0,2.7);
-	glTexCoord2f(X2,Y2); glVertex2f(1000.0,0.0);
+	glTexCoord2d(X1,Y2); glVertex2f(0.0,0.0);
+	glTexCoord2d(X1,Y1); glVertex2f(0.0,2.7);
+	glTexCoord2d(X2,Y1); glVertex2f(1000.0,2.7);
+	glTexCoord2d(X2,Y2); glVertex2f(1000.0,0.0);
 	glEnd();
 
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);

@@ -18,16 +18,15 @@
 BackgroundPointer b = BackgroundPointer(new Background());
 TankPointer t = TankPointer(new Tank());
 
-// ----------------------------------------------------------
-// Function Prototypes
-// ----------------------------------------------------------
+bool   gp;                              // G Нажата? ( Новое )
+GLuint filter;                          // Используемый фильтр для текстур
+GLuint fogMode[]= { GL_EXP, GL_EXP2, GL_LINEAR }; // Хранит три типа тумана
+GLuint fogfilter= 0;                    // Тип используемого тумана
+GLfloat fogColor[4]= {0.5f, 0.5f, 0.5f, 1.0f}; // Цвет тумана
+
 void display();
 void specialKeys();
 void keyPress();
-
-// ----------------------------------------------------------
-// Global Variables
-// ----------------------------------------------------------
 double rotate_y=0; 
 double rotate_x=0;
 
@@ -48,9 +47,15 @@ void display(){
 	b->draw();
 	t->draw();
 
-	//glFlush();
+	glEnable(GL_FOG);                       // Включает туман (GL_FOG)
+	glFogi(GL_FOG_MODE, fogMode[fogfilter]);// Выбираем тип тумана
+	glFogfv(GL_FOG_COLOR, fogColor);        // Устанавливаем цвет тумана
+	glFogf(GL_FOG_DENSITY, 1.0);          // Насколько густым будет туман
+	glHint(GL_FOG_HINT, GL_DONT_CARE);      // Вспомогательная установка тумана
+	glFogf(GL_FOG_START, 1.0f);             // Глубина, с которой начинается туман
+	glFogf(GL_FOG_END, 5.0f);               // Глубина, где туман заканчивается.
+
 	glutSwapBuffers();
-	//Sleep(100);
 }
 
 void key(unsigned char key, int x, int y){
@@ -79,10 +84,27 @@ void keyPress()
 		t->forward();
 	else if (KeyDown['s'])
 		t->backward();
+
+	if (KeyDown['g'] && !gp)                   // Нажата ли клавиша "G"?
+	{
+		   gp=TRUE;                         // gp устанавливаем в TRUE
+		   fogfilter+=1;                    // Увеличиние fogfilter на 1
+		   if (fogfilter>2)                 // fogfilter больше 2 ... ?
+		   {
+				  fogfilter=0;              // Если так, установить fogfilter в ноль
+		   }
+		   glFogi (GL_FOG_MODE, fogMode[fogfilter]); // Режим тумана
+	}
+	if (!KeyDown['g'])                         // Клавиша "G" отпущена?
+	{
+		   gp=FALSE;                        // Если да, gp установить в FALSE
+	}
 }
 
 void Init()
 {
+	//glClearColor(0.5f,0.5f,0.5f,1.0f);      // Будем очищать экран, заполняя его цветом тумана. ( Изменено )
+
 	glOrtho(0.0,1000.0,0.0,2.7,0.0,1000.0);
 	//  Enable Z-buffer depth test
 	glEnable(GL_DEPTH_TEST);
