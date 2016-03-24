@@ -14,14 +14,16 @@
 #include "const.h"
 #include "Tank.h"
 #include "Background.h"
+#include "Aim.h"
 
 BackgroundPointer b = BackgroundPointer(new Background());
 TankPointer t = TankPointer(new Tank());
+AimPointer a = AimPointer(new Aim());
 
 bool   gp;                              // G Нажата? ( Новое )
 GLuint filter;                          // Используемый фильтр для текстур
 GLuint fogMode[]= { GL_EXP, GL_EXP2, GL_LINEAR }; // Хранит три типа тумана
-GLuint fogfilter= 0;                    // Тип используемого тумана
+GLuint fogfilter= 2;                    // Тип используемого тумана
 GLfloat fogColor[4]= {0.5f, 0.5f, 0.5f, 1.0f}; // Цвет тумана
 
 void display();
@@ -31,21 +33,19 @@ double rotate_y=0;
 double rotate_x=0;
 
 double startX = -0.5, startY = -0.5, startZ = -0.5;
-double a = 1.0;
 	
 std :: vector<int> KeyDown(256);;
 
-// ----------------------------------------------------------
-// display() Callback function
-// ----------------------------------------------------------
 void display(){
 
 	//  Clear screen and Z-buffer
 	keyPress();
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-	b->draw();
-	t->draw();
+	/*b->draw();
+	t->draw();*/
+	a->draw();
+
 
 	glEnable(GL_FOG);                       // Включает туман (GL_FOG)
 	glFogi(GL_FOG_MODE, fogMode[fogfilter]);// Выбираем тип тумана
@@ -105,12 +105,29 @@ void Init()
 {
 	//glClearColor(0.5f,0.5f,0.5f,1.0f);      // Будем очищать экран, заполняя его цветом тумана. ( Изменено )
 
-	glOrtho(0.0,1000.0,0.0,2.7,0.0,1000.0);
+	glOrtho(0.0,poleX,0.0,poleY,0.0,poleZ);
 	//  Enable Z-buffer depth test
 	glEnable(GL_DEPTH_TEST);
 
-	t->load();
-	b->load();
+	/*t->load();
+	b->load();*/
+}
+
+void mouse(int but, int st, int x,int y)
+{
+	if (but == GLUT_RIGHT_BUTTON)
+	{
+		if (st == GLUT_DOWN)
+		{
+			a->changeShown();
+		}
+	}
+}
+
+void motion(int x, int y)
+{
+	a->setX(x);
+	a->setY(iWindowY - y);
 }
 
 int main(int argc, char* argv[]){
@@ -120,8 +137,8 @@ int main(int argc, char* argv[]){
 
 	//  Request double buffered true color window with Z-buffer
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(1024,640);				
-	glutInitWindowPosition(100,50);	
+	glutInitWindowSize(iWindowX,iWindowY);				
+	glutInitWindowPosition(50,50);	
 
 	// Create window
 	glutCreateWindow("Awesome Cube");
@@ -133,6 +150,8 @@ int main(int argc, char* argv[]){
 	glutIdleFunc(display);
 	glutKeyboardFunc(key);
 	glutKeyboardUpFunc(keyUp);
+	glutMouseFunc(mouse);
+	glutPassiveMotionFunc(motion);
 
 	//  Pass control to GLUT for events
 	glutMainLoop();
