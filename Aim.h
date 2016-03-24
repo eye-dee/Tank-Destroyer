@@ -29,6 +29,10 @@ public:
 private:
 	double x,y;
 	double rad;
+	double wCeil;
+	double biasX, biasY;
+
+	double heightCeil[3];
 	
 	bool isShown;
 };
