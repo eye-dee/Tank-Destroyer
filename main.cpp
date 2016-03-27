@@ -32,29 +32,52 @@ void keyPress();
 double rotate_y=0; 
 double rotate_x=0;
 
+double stX = 0.0, stY = 0.0;
+
 void fogTry()
 {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+
+	glPushMatrix();
 	glBegin(GL_POLYGON);
 	glColor3d(1.0,0.0,0.0);
-
-	glVertex2d(100.0,100.0);
-	glVertex2d(100.0,200.0);
-	glVertex2d(300.0,200.0);
-	glVertex2d(300.0,100.0);
+	glVertex2d(stX,stY + 100.0);
+	glVertex2d(stX + 100.0,stY + 100.0);
+	glColor4d(0.76,0.76,0.76,0.7);
+	glVertex2d(poleX,poleY);
+	glVertex2d(0.0,poleY);
 	glEnd();
 	
 	glBegin(GL_POLYGON);
-	glColor4d(0.56,0.56,0.56,0.0);
-
-	glVertex2d(0.0,0.0);
-	glVertex2d(0.0,poleY);
+	glColor3d(1.0,0.0,0.0);
+	glVertex2d(stX + 100.0,stY);
+	glVertex2d(stX + 100.0,stY + 100.0);
+	glColor4d(0.76,0.76,0.76,0.7);
 	glVertex2d(poleX,poleY);
 	glVertex2d(poleX,0.0);
-
 	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3d(1.0,0.0,0.0);
+	glVertex2d(stX + 100.0,stY);
+	glVertex2d(stX,stY);
+	glColor4d(0.76,0.76,0.76,0.7);
+	glVertex2d(0.0,0.0);
+	glVertex2d(poleX,0.0);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+	glColor3d(1.0,0.0,0.0);
+	glVertex2d(stX,stY);
+	glVertex2d(stX,stY + 100.0);
+	glColor4d(0.76,0.76,0.76,0.7);
+	glVertex2d(0.0,poleY);
+	glVertex2d(0.0,0.0);
+	glEnd();
+
+	glPopMatrix();
 
 	glDisable(GL_BLEND);
 }
@@ -69,9 +92,9 @@ void display(){
 	keyPress();
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-	/*b->draw();
+	b->draw();
 	t->draw();
-	a->draw();*/
+	a->draw();
 
 	fogTry();
 
@@ -138,9 +161,9 @@ void Init()
 	//  Enable Z-buffer depth test
 	//glEnable(GL_DEPTH_TEST);
 
-	/*t->load();
+	t->load();
 	b->load();
-	a->load();*/
+	a->load();
 }
 
 void mouse(int but, int st, int x,int y)
@@ -156,7 +179,9 @@ void mouse(int but, int st, int x,int y)
 
 void motion(int x, int y)
 {
+	stX = x;
 	a->setX(x);
+	stY = iWindowY - y;
 	a->setY(iWindowY - y);
 }
 
