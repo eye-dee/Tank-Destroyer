@@ -34,54 +34,6 @@ double rotate_x=0;
 
 double stX = 0.0, stY = 0.0;
 
-void fogTry()
-{
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-
-	glPushMatrix();
-	glBegin(GL_POLYGON);
-	glColor3d(1.0,0.0,0.0);
-	glVertex2d(stX,stY + 100.0);
-	glVertex2d(stX + 100.0,stY + 100.0);
-	glColor4d(0.76,0.76,0.76,0.7);
-	glVertex2d(poleX,poleY);
-	glVertex2d(0.0,poleY);
-	glEnd();
-	
-	glBegin(GL_POLYGON);
-	glColor3d(1.0,0.0,0.0);
-	glVertex2d(stX + 100.0,stY);
-	glVertex2d(stX + 100.0,stY + 100.0);
-	glColor4d(0.76,0.76,0.76,0.7);
-	glVertex2d(poleX,poleY);
-	glVertex2d(poleX,0.0);
-	glEnd();
-
-	glBegin(GL_POLYGON);
-	glColor3d(1.0,0.0,0.0);
-	glVertex2d(stX + 100.0,stY);
-	glVertex2d(stX,stY);
-	glColor4d(0.76,0.76,0.76,0.7);
-	glVertex2d(0.0,0.0);
-	glVertex2d(poleX,0.0);
-	glEnd();
-
-	glBegin(GL_POLYGON);
-	glColor3d(1.0,0.0,0.0);
-	glVertex2d(stX,stY);
-	glVertex2d(stX,stY + 100.0);
-	glColor4d(0.76,0.76,0.76,0.7);
-	glVertex2d(0.0,poleY);
-	glVertex2d(0.0,0.0);
-	glEnd();
-
-	glPopMatrix();
-
-	glDisable(GL_BLEND);
-}
-
 double startX = -0.5, startY = -0.5, startZ = -0.5;
 	
 std :: vector<int> KeyDown(256);;
@@ -95,9 +47,6 @@ void display(){
 	b->draw();
 	t->draw();
 	a->draw();
-
-	fogTry();
-
 
 	glEnable(GL_FOG);                       // Включает туман (GL_FOG)
 	glFogi(GL_FOG_MODE, fogMode[fogfilter]);// Выбираем тип тумана
@@ -159,7 +108,7 @@ void Init()
 
 	glOrtho(0.0,poleX,0.0,poleY,0.0,poleZ);
 	//  Enable Z-buffer depth test
-	//glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 
 	t->load();
 	b->load();

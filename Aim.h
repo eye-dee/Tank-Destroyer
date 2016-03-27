@@ -24,6 +24,9 @@ public:
 		isShown = !isShown;
 	}
 
+	void load();
+	void drawPicture() const;
+
 	void moveX(int dir);
 	void moveY(int dir);
 private:
@@ -35,5 +38,8 @@ private:
 	double heightCeil[3];
 	
 	bool isShown;
+
+	const char* fileName;
+	unsigned person;
 };
 

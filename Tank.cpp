@@ -5,12 +5,12 @@
 #include "lodepng.h"
 
 Tank::Tank() : x(350.0),
-	y(0.0),
+	y(250.0),
 	z(600.0),
 	V(0.01),
-	fileName("tank.png"),
+	fileName("abrams90.png"),
 	angle(PI/4.0),
-	a(5.0)
+	a(3.0)
 {
 }
 
@@ -42,10 +42,12 @@ void Tank :: draw() const
 {
 	glPushMatrix();
 
-	glTranslated(x,y,0.0);
+	glTranslated(x,y,-1.0);
 
-	auto hScaled = (max-z)/max*tankH;
-	glScaled(100*a,hScaled,a);
+	auto hScaled = (max-z)/max*poleY;
+	//glScaled(40*a,hScaled,a);
+	//std :: cout << hScaled << '\n';
+	glScaled(hScaled*a,hScaled,a);
 
 	int X1 = 0,Y1 = 0,X2= 1,Y2 = 1, Z = 1.0;
 

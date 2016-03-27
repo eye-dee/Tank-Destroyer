@@ -32,7 +32,7 @@ void Background :: draw()
 	double X1 = 0.0,Y1 = 0,X2= 1,Y2 = 1, Z = 1.0;
 
 	glPushMatrix();
-	glTranslated(0.0,0.0,-1.0);
+	glTranslated(0.0,0.0,-2.0);
 
 	glEnable( GL_TEXTURE_2D );
 	glEnable(GL_BLEND);
@@ -45,9 +45,9 @@ void Background :: draw()
 	glBegin( GL_QUADS );
 
 	glTexCoord2d(X1,Y2); glVertex2f(0.0,0.0);
-	glTexCoord2d(X1,Y1); glVertex2f(0.0,2.7);
-	glTexCoord2d(X2,Y1); glVertex2f(1000.0,2.7);
-	glTexCoord2d(X2,Y2); glVertex2f(1000.0,0.0);
+	glTexCoord2d(X1,Y1); glVertex2f(0.0,poleY);
+	glTexCoord2d(X2,Y1); glVertex2f(poleX,poleY);
+	glTexCoord2d(X2,Y2); glVertex2f(poleX,0.0);
 	glEnd();
 
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
