@@ -32,6 +32,33 @@ void keyPress();
 double rotate_y=0; 
 double rotate_x=0;
 
+void fogTry()
+{
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glBegin(GL_POLYGON);
+	glColor3d(1.0,0.0,0.0);
+
+	glVertex2d(100.0,100.0);
+	glVertex2d(100.0,200.0);
+	glVertex2d(300.0,200.0);
+	glVertex2d(300.0,100.0);
+	glEnd();
+	
+	glBegin(GL_POLYGON);
+	glColor4d(0.56,0.56,0.56,0.0);
+
+	glVertex2d(0.0,0.0);
+	glVertex2d(0.0,poleY);
+	glVertex2d(poleX,poleY);
+	glVertex2d(poleX,0.0);
+
+	glEnd();
+
+	glDisable(GL_BLEND);
+}
+
 double startX = -0.5, startY = -0.5, startZ = -0.5;
 	
 std :: vector<int> KeyDown(256);;
@@ -43,8 +70,10 @@ void display(){
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
 	/*b->draw();
-	t->draw();*/
-	a->draw();
+	t->draw();
+	a->draw();*/
+
+	fogTry();
 
 
 	glEnable(GL_FOG);                       // Включает туман (GL_FOG)
@@ -103,14 +132,15 @@ void keyPress()
 
 void Init()
 {
-	//glClearColor(0.5f,0.5f,0.5f,1.0f);      // Будем очищать экран, заполняя его цветом тумана. ( Изменено )
+	glClearColor(0.5f,0.5f,0.5f,1.0f);      // Будем очищать экран, заполняя его цветом тумана. ( Изменено )
 
 	glOrtho(0.0,poleX,0.0,poleY,0.0,poleZ);
 	//  Enable Z-buffer depth test
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_DEPTH_TEST);
 
 	/*t->load();
-	b->load();*/
+	b->load();
+	a->load();*/
 }
 
 void mouse(int but, int st, int x,int y)
