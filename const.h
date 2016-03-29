@@ -12,7 +12,7 @@
 	typedef std :: shared_ptr<Aim> AimPointer;
 
 	const auto PI = 3.1415926535897932384626433832795;
-	const auto max = 700.0;
+	const auto max = 300.0;
 	const auto tankH = 2.7;
 
 	auto const poleX = 1024.0,

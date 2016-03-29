@@ -143,7 +143,7 @@ void Aim :: draw() const
 	if (isShown)
 	{
 		glPushMatrix();
-		glTranslated(x,y,0.0);
+		glTranslated(x,y,-3.0);
 		glScaled(rad,rad*poleY/poleX / (dWindowY/dWindowX),1.0);
 
 		glBegin(GL_LINE_STRIP);
@@ -258,7 +258,7 @@ void Aim :: drawPicture() const
 	{
 		glPushMatrix();
 
-		glTranslated(x,y,0.0);
+		glTranslated(x,y,-3.0);
 		glScaled(rad,rad*poleY/poleX / (dWindowY/dWindowX),1.0);
 
 		int X1 = 0,Y1 = 0,X2= 1,Y2 = 1, Z = 1.0;

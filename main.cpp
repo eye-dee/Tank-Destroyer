@@ -44,17 +44,10 @@ void display(){
 	keyPress();
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
+	t->forward();
 	b->draw();
 	t->draw();
-	a->draw();
-
-	glEnable(GL_FOG);                       // Включает туман (GL_FOG)
-	glFogi(GL_FOG_MODE, fogMode[fogfilter]);// Выбираем тип тумана
-	glFogfv(GL_FOG_COLOR, fogColor);        // Устанавливаем цвет тумана
-	glFogf(GL_FOG_DENSITY, 1.0);          // Насколько густым будет туман
-	glHint(GL_FOG_HINT, GL_DONT_CARE);      // Вспомогательная установка тумана
-	glFogf(GL_FOG_START, 1.0f);             // Глубина, с которой начинается туман
-	glFogf(GL_FOG_END, 5.0f);               // Глубина, где туман заканчивается.
+	a->drawPicture();
 
 	glutSwapBuffers();
 }
@@ -104,6 +97,8 @@ void keyPress()
 
 void Init()
 {
+	std :: cout << "It's started\n";
+
 	glClearColor(0.5f,0.5f,0.5f,1.0f);      // Будем очищать экран, заполняя его цветом тумана. ( Изменено )
 
 	glOrtho(0.0,poleX,0.0,poleY,0.0,poleZ);

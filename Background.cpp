@@ -32,7 +32,7 @@ void Background :: draw()
 	double X1 = 0.0,Y1 = 0,X2= 1,Y2 = 1, Z = 1.0;
 
 	glPushMatrix();
-	glTranslated(0.0,0.0,-2.0);
+	glTranslated(0.0,0.0,-5.0);
 
 	glEnable( GL_TEXTURE_2D );
 	glEnable(GL_BLEND);

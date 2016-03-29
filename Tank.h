@@ -18,8 +18,9 @@ private:
 	double x,y,z;
 	double V;
 
-	const char* fileName;
-	unsigned person;
+	char* fileName[3];
+	unsigned person[3];
+	int curState;
 
 	double angle;
 	//temp
