@@ -6,10 +6,12 @@
 	class Tank;
 	class Background;
 	class Aim;
+	class Shell;
 
 	typedef std :: shared_ptr<Tank> TankPointer;
 	typedef std :: shared_ptr<Background> BackgroundPointer;
 	typedef std :: shared_ptr<Aim> AimPointer;
+	typedef std :: shared_ptr<Shell> ShellPointer;
 
 	const auto PI = 3.1415926535897932384626433832795;
 	const auto max = 300.0;
@@ -27,6 +29,8 @@
 
 	const auto aimHX= 1.0,
 		aimHY = 1.0;
+	
+	const auto shellH = 0.01;
 #endif
 
 	/*

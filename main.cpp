@@ -15,10 +15,12 @@
 #include "Tank.h"
 #include "Background.h"
 #include "Aim.h"
+#include "Shell.h"
 
 BackgroundPointer b = BackgroundPointer(new Background());
 TankPointer t = TankPointer(new Tank());
 AimPointer a = AimPointer(new Aim());
+ShellPointer s = ShellPointer(new Shell());
 
 bool   gp;                              // G Нажата? ( Новое )
 GLuint filter;                          // Используемый фильтр для текстур
@@ -45,9 +47,11 @@ void display(){
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
 	t->forward();
-	b->draw();
+	//b->draw();
 	t->draw();
 	a->drawPicture();
+	s->stepForward();
+	s->draw();
 
 	glutSwapBuffers();
 }
@@ -106,7 +110,7 @@ void Init()
 	glEnable(GL_DEPTH_TEST);
 
 	t->load();
-	b->load();
+	//b->load();
 	a->load();
 }
 
@@ -117,6 +121,13 @@ void mouse(int but, int st, int x,int y)
 		if (st == GLUT_DOWN)
 		{
 			a->changeShown();
+		}
+	}
+	if (but == GLUT_LEFT_BUTTON)
+	{
+		if (st == GLUT_DOWN)
+		{
+			s->fire(stX);
 		}
 	}
 }
