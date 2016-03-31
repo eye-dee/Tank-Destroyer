@@ -2,6 +2,7 @@
 #include <glut.h>
 #include <math.h>
 
+#include "Fire.h"
 #include "lodepng.h"
 
 Tank::Tank() : x(350.0),

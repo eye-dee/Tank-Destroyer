@@ -2,6 +2,8 @@
 #include <math.h>
 #include <glut.h>
 
+#include "Fire.h"
+
 Shell::Shell() : isFire(false), isExplosion(false)
 {
 }
@@ -20,8 +22,14 @@ void Shell :: fire(double startX, double setEndZ)
 
 	angle = PI/2.0;
 
-	speed = 1.0;
+	speed = 30.0;
 	endZ = setEndZ;
+}
+
+void Shell :: load()
+{
+	f = FirePointer(new Fire());
+	f->load();
 }
 
 void Shell :: stepForward()
@@ -32,14 +40,20 @@ void Shell :: stepForward()
 
 		z += speed*shellH;
 
-		y = -0.005*z*z + 1.0*z + 3.0/5.0*z;
-
+		//y = -0.005*z*z + 1.0*z + 3.0/5.0*z;
+		y = -0.005*z*(z-endZ) + 3.5/5.0*z;
+		
 		x += cos(angle);
 
 		if (z > endZ)
 		{
 			isFire = false;
 			isExplosion = true;
+			auto hScaled = 552.0/9.0 - 48.0/900.0*z;
+			f->setSize(hScaled);
+			f->setShellSize(10.0);
+			f->setX(x);
+			f->setY(y);
 		}
 	}
 }
@@ -62,11 +76,12 @@ void Shell :: draw() const
 	}
 	else if (isExplosion)
 	{
+		
 		explosion();
 	}
 }
 
 void Shell :: explosion() const
 {
-	//static 
+	f->draw();
 }

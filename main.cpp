@@ -16,6 +16,7 @@
 #include "Background.h"
 #include "Aim.h"
 #include "Shell.h"
+#include "Fire.h"
 
 BackgroundPointer b = BackgroundPointer(new Background());
 TankPointer t = TankPointer(new Tank());
@@ -47,11 +48,13 @@ void display(){
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
 	t->forward();
-	//b->draw();
+	b->draw();
 	t->draw();
 	a->drawPicture();
 	s->stepForward();
 	s->draw();
+
+	Sleep(50);
 
 	glutSwapBuffers();
 }
@@ -110,8 +113,9 @@ void Init()
 	glEnable(GL_DEPTH_TEST);
 
 	t->load();
-	//b->load();
+	b->load();
 	a->load();
+	s->load();
 }
 
 void mouse(int but, int st, int x,int y)
@@ -127,7 +131,7 @@ void mouse(int but, int st, int x,int y)
 	{
 		if (st == GLUT_DOWN)
 		{
-			s->fire(stX);
+			s->fire(stX,300.0);
 		}
 	}
 }

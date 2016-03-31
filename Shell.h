@@ -10,6 +10,8 @@ public:
 	void fire(double startX, double setEndZ);
 	void stepForward();
 
+	void load();
+
 	void draw() const;
 private:
 	double x,y,z;
@@ -24,6 +26,7 @@ private:
 
 	double endZ;
 
+	FirePointer f;	
 	void explosion() const;
 };
 

@@ -21,6 +21,7 @@ void fogTry(double stX, double stY, double rad)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glPushMatrix();
+	glTranslated(0.0,0.0,-1.0);
 	double circleX = stX + rad*cos(0.0), circleY = stY + rad*sin(0.0), prevX = poleX, prevY = stY;
 
 	int prevSt = 0;
