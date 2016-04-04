@@ -14,6 +14,11 @@ public:
 	void backward();
 
 	void load();
+
+	inline void setSpeed(double set)
+	{
+		V = set/100.0;
+	}
 private:
 	double x,y,z;
 	double V;

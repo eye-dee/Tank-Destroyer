@@ -23,6 +23,10 @@ public:
 	{
 		return (curWindDir - 17)*PI/2.0;
 	}
+	double inline getTankSpeed()
+	{
+		return (curTankSpeed-2.0)*5.0;
+	}
 private:
 	const char* fileName;
 	unsigned person;

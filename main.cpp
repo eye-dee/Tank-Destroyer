@@ -115,6 +115,8 @@ void Init()
 
 	s->setWindSpeed(b->getWindSpeed());
 	s->setAngleWind(b->getWindAngle());
+
+	t->setSpeed(b->getTankSpeed());
 }
 
 void mouse(int but, int st, int x,int y)
