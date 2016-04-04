@@ -17,24 +17,33 @@
 
 	const auto PI = 3.1415926535897932384626433832795;
 	const auto max = 300.0;
-	const auto tankH = 2.7;
+	const auto TANK_H = 2.7;
 
-	auto const poleX = 1024.0,
-		poleY = 621.0,
-		poleZ = 1024.0;
+	auto const POLE_X = 1024.0,
+		POLE_Y = 621.0,
+		POLE_Z = 1024.0;
 	
 	const auto iWindowX = 1024,
 		iWindowY = 621;
 
-	const auto dWindowX = 1024.0,
-		dWindowY = 621.0;
+	const auto D_WINDOW_X = 1024.0,
+		D_WINDOW_Y = 621.0;
 
-	const auto aimHX= 1.0,
-		aimHY = 1.0;
+	const auto AIM_H_X= 1.0,
+		AIM_H_Y = 1.0;
 	
-	const auto shellH = 0.1;
+	const auto SHELL_H = 0.1;
 	
-	const auto pictureAspect = 0.8;
+	const auto PICTURE_ASPECT = 0.8;
+
+	const auto SPEED_POS_X = 20.0,
+		SPEED_POS_Y = 0.9*POLE_Y;
+	const auto TEXT_SIZE = 60.0;
+
+	inline int random(int a)
+	{
+		return rand()%a;
+	}
 #endif
 
 	/*
@@ -64,7 +73,7 @@ void Aim :: draw() const
 	{
 		glPushMatrix();
 		glTranslated(x,y,0.0);
-		glScaled(rad,rad*poleY/poleX / (dWindowY/dWindowX),1.0);
+		glScaled(rad,rad*POLE_Y/POLE_X / (D_WINDOW_Y/D_WINDOW_X),1.0);
 
 		glBegin(GL_LINE_STRIP);
 		for (double t = 0.0; t < 2*PI + 0.1; t += 0.1)
@@ -151,9 +160,9 @@ void Aim :: draw() const
 
 void Aim :: moveX(int dir)
 {
-	x += (dir*aimHX);
+	x += (dir*AIM_H_X);
 }
 void Aim :: moveY(int dir)
 {
-	y += (dir*aimHY);
+	y += (dir*AIM_H_Y);
 }*/

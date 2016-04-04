@@ -1,16 +1,10 @@
-#include <stdio.h>
-#include <stdarg.h>
 #include <math.h>
 #include <iostream>
-#define GL_GLEXT_PROTOTYPES
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <glut.h>
-#endif
-
 #include <vector>
 #include <Windows.h>
+#include <glut.h>
+#include <time.h>
+
 #include "const.h"
 #include "Tank.h"
 #include "Background.h"
@@ -53,6 +47,7 @@ void display(){
 	a->drawPicture();
 	s->stepForward();
 	s->draw();
+	b->drawSpeed();
 
 	Sleep(50);
 
@@ -104,11 +99,12 @@ void keyPress()
 
 void Init()
 {
+	srand(time(0u));
 	std :: cout << "It's started\n";
 
 	glClearColor(0.5f,0.5f,0.5f,1.0f);      // Будем очищать экран, заполняя его цветом тумана. ( Изменено )
 
-	glOrtho(0.0,poleX,0.0,poleY,0.0,poleZ);
+	glOrtho(0.0,POLE_X,0.0,POLE_Y,0.0,POLE_Z);
 	//  Enable Z-buffer depth test
 	glEnable(GL_DEPTH_TEST);
 
@@ -116,6 +112,9 @@ void Init()
 	b->load();
 	a->load();
 	s->load();
+
+	s->setWindSpeed(b->getWindSpeed());
+	s->setAngleWind(b->getWindAngle());
 }
 
 void mouse(int but, int st, int x,int y)
@@ -131,7 +130,7 @@ void mouse(int but, int st, int x,int y)
 	{
 		if (st == GLUT_DOWN)
 		{
-			s->fire(stX,300.0);
+			s->fire(stX,stY);
 		}
 	}
 }

@@ -2,14 +2,14 @@
 #include <glut.h>
 #include "lodepng.h"
 
-Aim::Aim() : x(250.0),
+Aim :: Aim() : x(250.0),
 	y(250.0),
 	rad(200.0),
 	isShown(true),
 	wCeil(1.0/10.0),
 	biasX(1.0/100.0),
 	biasY(1.0/50.0),
-	fileName("aim.png")
+	fileName("picture/aim.png")
 {
 	for (int i = 0; i < 3; ++i)
 		heightCeil[i] = 2.0/(20.0+5*i);
@@ -22,7 +22,7 @@ void fogTry(double stX, double stY, double rad)
 
 	glPushMatrix();
 	glTranslated(0.0,0.0,-1.0);
-	double circleX = stX + rad*cos(0.0), circleY = stY + rad*sin(0.0), prevX = poleX, prevY = stY;
+	double circleX = stX + rad*cos(0.0), circleY = stY + rad*sin(0.0), prevX = POLE_X, prevY = stY;
 
 	int prevSt = 0;
 	for (double t = 0.1; t < 2*PI + 0.09; t += 0.1)
@@ -39,17 +39,17 @@ void fogTry(double stX, double stY, double rad)
 		double dopX, dopY;
 		if (t < PI)
 		{
-			newX = (poleY - b)/k;
+			newX = (POLE_Y - b)/k;
 		}	else if (t < 2*PI)
 		{
 			newX = (0.0 - b)/k;
 		}	else
-			newX = (poleY - b)/k;
+			newX = (POLE_Y - b)/k;
 
 		int st;
-		if (newX > poleX)
+		if (newX > POLE_X)
 		{
-			newX = poleX;
+			newX = POLE_X;
 			if (prevSt == 0)
 				st = 0;
 			else if (prevSt == 3)
@@ -77,14 +77,14 @@ void fogTry(double stX, double stY, double rad)
 		{
 			if (st == 1)
 			{
-				dopX = poleX;
-				dopY = poleY;
+				dopX = POLE_X;
+				dopY = POLE_Y;
 				prevSt = st;
 				isDopPoint = true;
 			} else if (st == 2)
 			{
 				dopX = 0.0;
-				dopY = poleY;
+				dopY = POLE_Y;
 				prevSt = st;
 				isDopPoint = true;
 			} else if (st == 3)
@@ -95,7 +95,7 @@ void fogTry(double stX, double stY, double rad)
 				isDopPoint = true;
 			} else if (st == 0)
 			{
-				dopX = poleX;
+				dopX = POLE_X;
 				dopY = 0.0;
 				isDopPoint = true;
 				prevSt = st;
@@ -107,7 +107,7 @@ void fogTry(double stX, double stY, double rad)
 		if (isDopPoint)
 		{
 			glBegin(GL_POLYGON);
-			glColor3d(0.1,0.1,0.1);
+			glColor3d(0.2,0.2,0.2);
 			glVertex2d(circleX,circleY);
 			glVertex2d(curX,curY);
 			glColor4d(0.76,0.76,0.76,0.7);
@@ -118,7 +118,7 @@ void fogTry(double stX, double stY, double rad)
 		} else
 		{
 			glBegin(GL_POLYGON);
-			glColor3d(0.1,0.1,0.1);
+			glColor3d(0.2,0.2,0.2);
 			glVertex2d(circleX,circleY);
 			glVertex2d(curX,curY);
 			glColor4d(0.76,0.76,0.76,0.7);
@@ -145,7 +145,7 @@ void Aim :: draw() const
 	{
 		glPushMatrix();
 		glTranslated(x,y,-3.0);
-		glScaled(rad,rad*poleY/poleX / (dWindowY/dWindowX),1.0);
+		glScaled(rad,rad*POLE_Y/POLE_X / (D_WINDOW_Y/D_WINDOW_X),1.0);
 
 		glBegin(GL_LINE_STRIP);
 		for (double t = 0.0; t < 2*PI + 0.1; t += 0.1)
@@ -233,11 +233,11 @@ void Aim :: draw() const
 
 void Aim :: moveX(int dir)
 {
-	x += (dir*aimHX);
+	x += (dir*AIM_H_X);
 }
 void Aim :: moveY(int dir)
 {
-	y += (dir*aimHY);
+	y += (dir*AIM_H_Y);
 }
 
 void Aim :: load()
@@ -260,7 +260,7 @@ void Aim :: drawPicture() const
 		glPushMatrix();
 
 		glTranslated(x,y,-3.0);
-		glScaled(rad,rad*poleY/poleX / (dWindowY/dWindowX),1.0);
+		glScaled(rad,rad*POLE_Y/POLE_X / (D_WINDOW_Y/D_WINDOW_X),1.0);
 
 		int X1 = 0,Y1 = 0,X2= 1,Y2 = 1, Z = 1.0;
 

@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 
+const auto SIZEN = 17;
+
 class Fire
 {
 public:
@@ -8,7 +10,7 @@ public:
 	~Fire();
 
 	void load();
-	void draw();
+	bool draw();
 
 	inline void setX(double set)
 	{
@@ -28,8 +30,8 @@ public:
 		dopSize = set;
 	}
 private:
-	char* fileName[27];
-	unsigned person[27];
+	char* fileName[SIZEN];
+	unsigned person[SIZEN];
 
 	double x,y;
 	double size;
@@ -40,11 +42,15 @@ private:
 
 	int speed;
 
-	inline void nextState()
+	inline bool nextState()
 	{
 		++curState;
-		if (curState == 27*speed)
+		if (curState == SIZEN*speed)
+		{
 			curState = 0;
+			return true;
+		}
+		return false;
 	}
 };
 

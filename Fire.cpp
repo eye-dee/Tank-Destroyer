@@ -9,13 +9,13 @@
 Fire::Fire() : curState(0), speed(2)
 {
 	char* temp,* str;
-	for (int i = 0; i < 27; ++i)
+	for (int i = 0; i < SIZEN; ++i)
 	{
-		str = new char[11];
-		strcpy(str,"explosion/");
-		str[10] = 0;
+		str = new char[12];
+		strcpy(str,"explosion2/");
+		str[11] = 0;
 		temp = new char[3];
-		itoa(i,temp,10);
+		itoa(i+1,temp,10);
 		strcat(temp, ".png");
 		strcat(str,temp);
 
@@ -31,7 +31,7 @@ Fire::~Fire()
 void Fire :: load()
 {
 	unsigned char* data;
-	for (int i = 0; i < 27; ++i)
+	for (int i = 0; i < SIZEN; ++i)
 	{
 		unsigned width, height;
 		person[i] = lodepng_decode32_file(&data, &width, &height, fileName[i]);
@@ -45,13 +45,13 @@ void Fire :: load()
 	delete data;
 }
 
-void Fire :: draw()
+bool Fire :: draw()
 {
 	glPushMatrix();
 
 	glTranslated(x,y,0.0);
 
-	glScaled(size*pictureAspect,size,1.0);
+	glScaled(size*PICTURE_ASPECT,size,1.0);
 
 	int X1 = 0,Y1 = 0,X2= 1,Y2 = 1, Z = 1.0;
 
@@ -78,5 +78,5 @@ void Fire :: draw()
 
 	glPopMatrix();
 
-	nextState();
+	return nextState();
 }

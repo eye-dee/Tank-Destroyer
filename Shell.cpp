@@ -20,9 +20,7 @@ void Shell :: fire(double startX, double setEndZ)
 	y = 0.0;
 	z = 0.0;
 
-	angle = PI/2.0;
-
-	speed = 30.0;
+	speed = 50.0;
 	endZ = setEndZ;
 }
 
@@ -36,14 +34,12 @@ void Shell :: stepForward()
 {
 	if (isFire)
 	{
-		double tempAngle = atan(2*z);
-
-		z += speed*shellH;
+		z += speed*SHELL_H;
 
 		//y = -0.005*z*z + 1.0*z + 3.0/5.0*z;
-		y = -0.005*z*(z-endZ) + 3.5/5.0*z;
+		y = -1/endZ*z*(z-endZ) + 4.5/5.0*z;
 		
-		x += cos(angle);
+		x += 0.1*windSpeed*cos(angle);
 
 		if (z > endZ)
 		{
@@ -58,7 +54,7 @@ void Shell :: stepForward()
 	}
 }
 
-void Shell :: draw() const
+void Shell :: draw()
 {
 	if (isFire)
 	{
@@ -76,12 +72,14 @@ void Shell :: draw() const
 	}
 	else if (isExplosion)
 	{
-		
 		explosion();
 	}
 }
 
-void Shell :: explosion() const
+void Shell :: explosion()
 {
-	f->draw();
+	if (f->draw())
+	{
+		isExplosion = false;
+	}
 }

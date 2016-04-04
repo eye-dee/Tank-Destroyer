@@ -8,14 +8,14 @@
 Tank::Tank() : x(350.0),
 	y(250.0),
 	z(900.0),
-	V(0.005),
+	V(0.05),
 	curState(2),
 	angle(PI/2.0),
 	a(3.0)
 {
-	fileName[0] = "abrams0.png";
-	fileName[1] = "abrams45.png";
-	fileName[2] = "abrams90.png";
+	fileName[0] = "picture/abrams0.png";
+	fileName[1] = "picture/abrams45.png";
+	fileName[2] = "picture/abrams90.png";
 
 	y = (5.0/30.0*z + 1200.0/9.0);
 }
@@ -24,9 +24,9 @@ Tank::Tank(double setX, double setY, double setZ) : x(setX),
 	y(setY),
 	z(setZ)
 {
-	fileName[0] = "abrams0.png";
-	fileName[1] = "abrams45.png";
-	fileName[2] = "abrams90.png";
+	fileName[0] = "picture/abrams0.png";
+	fileName[1] = "picture/abrams45.png";
+	fileName[2] = "picture/abrams90.png";
 	y = (5.0/3.0*z + 2550.0/9.0);
 }
 
@@ -57,7 +57,7 @@ void Tank :: draw() const
 
 	glTranslated(x,y,-4.0);
 
-	//auto hScaled = 2.7*(max-z)/max*poleY;
+	//auto hScaled = 2.7*(max-z)/max*POLE_Y;
 	auto hScaled = 552.0/9.0 - 48.0/900.0*z;
 	//glScaled(40*a,hScaled,a);
 	//std :: cout << hScaled << '\n';

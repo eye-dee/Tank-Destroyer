@@ -12,12 +12,22 @@ public:
 
 	void load();
 
-	void draw() const;
+	void draw();
+
+	inline void setWindSpeed(double set)
+	{
+		windSpeed = set;
+	}
+	inline void setAngleWind(double set)
+	{
+		angle = PI+set;
+	}
 private:
 	double x,y,z;
 
 	double angle;
 	double speed;
+	double windSpeed;
 
 	double t;
 
@@ -27,6 +37,6 @@ private:
 	double endZ;
 
 	FirePointer f;	
-	void explosion() const;
+	void explosion();
 };
 
