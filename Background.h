@@ -27,6 +27,16 @@ public:
 	{
 		return (curTankSpeed-2.0)*5.0;
 	}
+	inline int getCurTankDir()
+	{
+		return curTankDir;
+	}
+
+	inline void setBondBlood()
+	{
+		isBondBlood = true;
+	}
+	void drawBondBlood() const;
 private:
 	const char* fileName;
 	unsigned person;
@@ -36,5 +46,10 @@ private:
 	int curTankSpeed;
 	int curWindSpeed;
 	int curWindDir;
+	int curTankDir;
+
+	bool isBondBlood;
+
+	double *bondX, *bondY, *bondB, *bondC, *bondD;
 };
 

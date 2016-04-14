@@ -1,0 +1,60 @@
+﻿Построение начато 14.04.2016 21:34:55.
+     1>Проект "C:\Users\Игорь\Documents\Visual Studio 2010\Projects\Военная кафедра\Сбить Танк\Сбить Танк\Сбить Танк.vcxproj" в узле 2 (целевые объекты build).
+     1>InitializeBuildStatus:
+         Обращение к "Release\Сбить Танк.unsuccessfulbuild".
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Aim.cpp Background.cpp Fire.cpp main.cpp Shell.cpp Tank.cpp
+         Aim.cpp
+     1>c:\users\игорь\documents\visual studio 2010\projects\военная кафедра\сбить танк\сбить танк\const.h(46): warning C4244: инициализация: преобразование "const double" в "const int", возможна потеря данных
+         Background.cpp
+     1>c:\users\игорь\documents\visual studio 2010\projects\военная кафедра\сбить танк\сбить танк\const.h(46): warning C4244: инициализация: преобразование "const double" в "const int", возможна потеря данных
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\cmath.h(135): warning C4091: typedef : пропускается слева от "polynomial", когда ни одна переменная не объявлена
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\cmath.h(143): warning C4091: typedef : пропускается слева от "COMPLEX", когда ни одна переменная не объявлена
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\cmath.h(154): warning C4091: typedef : пропускается слева от "BSPLSTRC", когда ни одна переменная не объявлена
+         Fire.cpp
+     1>c:\users\игорь\documents\visual studio 2010\projects\военная кафедра\сбить танк\сбить танк\const.h(46): warning C4244: инициализация: преобразование "const double" в "const int", возможна потеря данных
+     1>Fire.cpp(15): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(105): см. объявление "strcpy"
+     1>Fire.cpp(18): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdlib.h(867): см. объявление "itoa"
+     1>Fire.cpp(19): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(110): см. объявление "strcat"
+     1>Fire.cpp(20): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(110): см. объявление "strcat"
+         main.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\cmath.h(135): warning C4091: typedef : пропускается слева от "polynomial", когда ни одна переменная не объявлена
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\cmath.h(143): warning C4091: typedef : пропускается слева от "COMPLEX", когда ни одна переменная не объявлена
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\cmath.h(154): warning C4091: typedef : пропускается слева от "BSPLSTRC", когда ни одна переменная не объявлена
+         Shell.cpp
+     1>c:\users\игорь\documents\visual studio 2010\projects\военная кафедра\сбить танк\сбить танк\const.h(46): warning C4244: инициализация: преобразование "const double" в "const int", возможна потеря данных
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\cmath.h(135): warning C4091: typedef : пропускается слева от "polynomial", когда ни одна переменная не объявлена
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\cmath.h(143): warning C4091: typedef : пропускается слева от "COMPLEX", когда ни одна переменная не объявлена
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\cmath.h(154): warning C4091: typedef : пропускается слева от "BSPLSTRC", когда ни одна переменная не объявлена
+         Tank.cpp
+     1>c:\users\игорь\documents\visual studio 2010\projects\военная кафедра\сбить танк\сбить танк\const.h(46): warning C4244: инициализация: преобразование "const double" в "const int", возможна потеря данных
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\cmath.h(135): warning C4091: typedef : пропускается слева от "polynomial", когда ни одна переменная не объявлена
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\cmath.h(143): warning C4091: typedef : пропускается слева от "COMPLEX", когда ни одна переменная не объявлена
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\cmath.h(154): warning C4091: typedef : пропускается слева от "BSPLSTRC", когда ни одна переменная не объявлена
+         Для всех выходных данных обновления не требуется.
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Игорь\Documents\Visual Studio 2010\Projects\Военная кафедра\Сбить Танк\Release\Сбить Танк.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\Сбить Танк.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Игорь\Documents\Visual Studio 2010\Projects\Военная кафедра\Сбить Танк\Release\Сбить Танк.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Игорь\Documents\Visual Studio 2010\Projects\Военная кафедра\Сбить Танк\Release\Сбить Танк.lib" /MACHINE:X86 Release\Aim.obj
+         Release\Background.obj
+         Release\Fire.obj
+         Release\lodepng.obj
+         Release\main.obj
+         Release\Shell.obj
+         Release\spline.obj
+         Release\Tank.obj
+         Создание кода
+         Создание кода завершено
+         Сбить Танк.vcxproj -> C:\Users\Игорь\Documents\Visual Studio 2010\Projects\Военная кафедра\Сбить Танк\Release\Сбить Танк.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Игорь\Documents\Visual Studio 2010\Projects\Военная кафедра\Сбить Танк\Release\Сбить Танк.exe;#1" /manifest "Release\Сбить Танк.exe.intermediate.manifest"
+       FinalizeBuildStatus:
+         Файл "Release\Сбить Танк.unsuccessfulbuild" удаляется.
+         Обращение к "Release\Сбить Танк.lastbuildstate".
+     1>Построение проекта "C:\Users\Игорь\Documents\Visual Studio 2010\Projects\Военная кафедра\Сбить Танк\Сбить Танк\Сбить Танк.vcxproj" завершено (целевые объекты build).
+
+Построение успешно завершено.
+
+Затраченное время: 00:00:08.75

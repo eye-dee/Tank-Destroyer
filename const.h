@@ -3,6 +3,7 @@
 	
 #include <memory>
 #include <iostream>
+
 	class Tank;
 	class Background;
 	class Aim;
@@ -40,129 +41,38 @@
 		SPEED_POS_Y = 0.9*POLE_Y;
 	const auto TEXT_SIZE = 60.0;
 
+	const auto bondIH = 0.0005,
+		bondH = 30.0;
+	const int N = POLE_X/bondH + 2;
+
 	inline int random(int a)
 	{
 		return rand()%a;
 	}
-#endif
 
-	/*
-	#include "Aim.h"
-#include <glut.h>
-
-Aim::Aim() : x(250.0),
-	y(250.0),
-	rad(200.0),
-	isShown(true),
-	wCeil(1.0/10.0),
-	biasX(1.0/100.0),
-	biasY(1.0/50.0)
-{
-	for (int i = 0; i < 3; ++i)
-		heightCeil[i] = 1.0/(20.0+5*i);
-}
-
-
-Aim::~Aim()
-{
-}
-
-void Aim :: draw() const
-{
-	if (isShown)
+	inline double f(double x)
 	{
-		glPushMatrix();
-		glTranslated(x,y,0.0);
-		glScaled(rad,rad*POLE_Y/POLE_X / (D_WINDOW_Y/D_WINDOW_X),1.0);
+		double sum = 0.0;
+		for (int i = 0; i < 15; ++i)
+			sum += random(30)*abs(sin(x)) + random(30)*abs(cos(x));
 
-		glBegin(GL_LINE_STRIP);
-		for (double t = 0.0; t < 2*PI + 0.1; t += 0.1)
-			glVertex2d(cos(t),sin(t));
-		glEnd();
-
-		for (int i = 0; i < 6; ++i)
-		{
-			glBegin(GL_LINE_LOOP);
-				glVertex2d(-biasX -1.0/3.0 + i*wCeil,0.0);
-				glVertex2d(-biasX -1.0/3.0 + (i+1)*wCeil,0.0);
-				glVertex2d(-biasX -1.0/3.0 + (i+1)*wCeil,heightCeil[1]);
-				glVertex2d(-biasX -1.0/3.0 + i*wCeil,heightCeil[1]);
-			glEnd();
-
-			glBegin(GL_LINE_LOOP);
-				glVertex2d(biasX +1.0/3.0 - i*wCeil,0.0);
-				glVertex2d(biasX +1.0/3.0 - (i+1)*wCeil,0.0);
-				glVertex2d(biasX +1.0/3.0 - (i+1)*wCeil,heightCeil[1]);
-				glVertex2d(biasX +1.0/3.0 - i*wCeil,heightCeil[1]);
-			glEnd();
-
-			glBegin(GL_LINE_LOOP);
-				glVertex2d(-biasX -1.0/3.0 + i*wCeil,0.0);
-				glVertex2d(-biasX -1.0/3.0 + (i+1)*wCeil,0.0);
-				glVertex2d(-biasX -1.0/3.0 + (i+1)*wCeil,-heightCeil[0]);
-				glVertex2d(-biasX -1.0/3.0 + i*wCeil,-heightCeil[0]);
-			glEnd();
-
-			glBegin(GL_LINE_LOOP);
-				glVertex2d(biasX +1.0/3.0 - i*wCeil,0.0);
-				glVertex2d(biasX +1.0/3.0 - (i+1)*wCeil,0.0);
-				glVertex2d(biasX +1.0/3.0 - (i+1)*wCeil,-heightCeil[0]);
-				glVertex2d(biasX +1.0/3.0 - i*wCeil,-heightCeil[0]);
-			glEnd();
-
-			glBegin(GL_LINE_LOOP);
-				glVertex2d(-biasX -1.0/3.0 + i*wCeil,heightCeil[1] + biasY);
-				glVertex2d(-biasX -1.0/3.0 + (i+1)*wCeil,heightCeil[1] + biasY);
-				glVertex2d(-biasX -1.0/3.0 + (i+1)*wCeil,heightCeil[1] + biasY + heightCeil[2]);
-				glVertex2d(-biasX -1.0/3.0 + i*wCeil,heightCeil[1] + biasY + heightCeil[2]);
-			glEnd();
-
-			glBegin(GL_LINE_LOOP);
-				glVertex2d(biasX +1.0/3.0 - i*wCeil,heightCeil[1] + biasY);
-				glVertex2d(biasX +1.0/3.0 - (i+1)*wCeil,heightCeil[1] + biasY);
-				glVertex2d(biasX +1.0/3.0 - (i+1)*wCeil,heightCeil[1] + biasY + heightCeil[2]);
-				glVertex2d(biasX +1.0/3.0 - i*wCeil,heightCeil[1] + biasY + heightCeil[2]);
-			glEnd();
-
-		}
-
-		glBegin(GL_LINES);
-
-			glVertex2d(-biasX,0.0);
-			glVertex2d(-biasX,-0.3);
-
-			glVertex2d(biasX,0.0);
-			glVertex2d(biasX,-0.3);
-
-		glEnd();
-
-		glBegin(GL_LINES);
-
-			glVertex2d(0.0,0.55);
-			glVertex2d(0.0,0.45);
-
-			glVertex2d(-0.05,0.5);
-			glVertex2d(0.05,0.5);
-
-			glVertex2d(0.1,-0.27);
-			glVertex2d(0.33,-0.27);
-
-		glEnd();
-
-		glBegin(GL_LINE_STRIP);
-			for (double t = 0.0; t < 9.1; t += 1.0)
-				glVertex2d(0.1 + t/9.0*0.23,-0.25 + 0.1*exp(-0.3*t));
-		glEnd();
-
-		glPopMatrix();
+		if (sum > POLE_Y)
+			return POLE_Y;
+		return POLE_Y - sum;
 	}
-}
 
-void Aim :: moveX(int dir)
-{
-	x += (dir*AIM_H_X);
-}
-void Aim :: moveY(int dir)
-{
-	y += (dir*AIM_H_Y);
-}*/
+	const auto NdistToSize = 9;
+	const double dist[] = {200.0,300.0,400.0,500.0,600.0,700.0,800.0,900.0,1000.0},
+		size[] = {61.0/468.0,45.0/468.0,34.0/468.0,26.0/468.0,20.0/468.0,18.0/468.0,16.0/468.0,15.0/468.0,14.0/468.0};
+
+	const auto NZToY = 20;
+	const double Z[] = {50.0,100.0,150.0,200.0,250.0,300.0,350.0,400.0,450.0,500.0,550.0,600.0,650.0,700.0,750.0,800.0,850.0,900.0,950.0,1000.0},
+		Y[] = {440.0,637.0,767.0,897.0,1010.0,1105.0,1178.0,1258.0,1318.0,1368.0,1408.0,1453.0,1492,1524.0,1548.0,1568.0,1588.0,1600.0,1610.0,1615.0};
+
+	const auto TANK_ASPECT0 = 3.3666666666666666666666666666667,
+		TANK_ASPECT45 = 3.25,
+		TANK_ASPECT90 = 1.8266666666666666666666666666667;
+	const auto TANK_PART0 = 240.0/300.0,
+		TANK_PART45 = 204.0/300.0,
+		TANK_PART90 = 193.0/300.0;
+#endif

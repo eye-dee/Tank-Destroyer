@@ -5,7 +5,9 @@
 #include <algorithm>
 #include <math.h>
 
-Background::Background() : fileName("picture/back.png")
+#include "spline.h"
+
+Background::Background() : fileName("picture/back.png"), isBondBlood(false)
 {
 	speedFileName[0] = "picture/VT.png";
 	speedFileName[1] = "picture/κμ_χ.png";
@@ -38,9 +40,10 @@ Background::~Background()
 
 void Background :: load()
 {
-	curTankSpeed = 2 + random(8);
+	curTankSpeed = /*2 + random(8)*/2;
 	curWindSpeed = TANK_N + 2 + random(5);
 	curWindDir = TANK_N + WIND_N + random(4);
+	curTankDir = /*random(5)*/1;
 
 	unsigned char* data;
 	unsigned width, height;
@@ -64,6 +67,25 @@ void Background :: load()
 	}
 
 	delete data;
+
+	bondX = new double[N];
+	bondY = new double[N];
+	bondB = new double[N];
+	bondC = new double[N];
+	bondD = new double[N];
+
+	int i = 0;
+	for (double t = 0.0; t < POLE_X + bondH; ++i, t += bondH)
+	{
+		bondX[i] = t;
+		bondY[i] = f(t);
+	};
+
+	int flag;
+	spline(N,0,0,0,0,bondX,bondY,bondB,bondC,bondD, &flag);
+
+	if (flag != 0)
+		exit(-1);
 }
 
 void Background :: draw() const
@@ -103,7 +125,7 @@ void Background :: drawSpeed() const
 	glPushMatrix();
 
 		/*SPEED TANK*/
-		glTranslated(SPEED_POS_X,SPEED_POS_Y,0.0);
+		glTranslated(SPEED_POS_X,SPEED_POS_Y,-0.5);
 		glScaled(TEXT_SIZE,TEXT_SIZE,1.0);
 
 		glEnable( GL_TEXTURE_2D );
@@ -186,7 +208,7 @@ void Background :: drawSpeed() const
 		glTexCoord2d(X2,Y2); glVertex2f(3.0,-1.0);
 		glEnd();
 		
-			/*Wind Dir*/
+		/*Wind Dir*/
 		glBindTexture( GL_TEXTURE_2D, speedId[curWindDir]);
 
 		glPixelStorei( GL_UNPACK_ALIGNMENT, 1 ); 
@@ -202,6 +224,51 @@ void Background :: drawSpeed() const
 
 		glDisable(GL_BLEND);
 		glDisable(GL_TEXTURE_2D);
-			/**/
+		/**/
 	glPopMatrix();
+}
+
+void Background :: drawBondBlood() const
+{
+	if (isBondBlood)
+	{
+		static double bondI = 0.0;
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glPushMatrix();
+				glTranslated(0.0,0.0,-0.3);
+				//glBegin(GL_POLYGON);
+				//glBegin(GL_LINE_STRIP);
+				glBegin(GL_LINES);
+
+					int last;
+
+					double start, end;
+					for (double t = 0.0; t < POLE_X; t += 1.0)
+					{
+						start = seval(N,t,bondX,bondY,bondB,bondC,bondD,&last);
+						end = /*seval(N,t,bondX[1],bondY[1],bondB[1],bondC[1],bondD[1],&last)*/0.0;
+						glColor4d(1.0,0.0,0.0,0.7);
+						glVertex2d(t,start + bondI*(end-start));
+						glColor4d(0.9,0.05,0.05,0.4);
+						glVertex2d(t,POLE_Y);
+					}	
+				glEnd();
+
+				if (bondI < 1.0)
+					bondI += bondIH;
+
+				glBegin(GL_LINE_STRIP);
+					glColor3d(0.0,1.0,0.0);
+	
+						for (int i = 0; i < N; ++i)
+							glVertex2d(bondX[i], bondY[i]-50.0);	
+
+				glEnd();
+
+			glPopMatrix();
+
+		glDisable(GL_BLEND);
+	}
 }

@@ -4,6 +4,9 @@
 #include <Windows.h>
 #include <glut.h>
 #include <time.h>
+#include <iomanip>
+
+#include "spline.c"
 
 #include "const.h"
 #include "Tank.h"
@@ -11,6 +14,11 @@
 #include "Aim.h"
 #include "Shell.h"
 #include "Fire.h"
+
+double *bDistToSize, *cDistToSize, *dDistToSize;
+double *bZToY, *cZToY, *dZToY;
+
+using std :: setw;
 
 BackgroundPointer b = BackgroundPointer(new Background());
 TankPointer t = TankPointer(new Tank());
@@ -28,30 +36,59 @@ void specialKeys();
 void keyPress();
 double rotate_y=0; 
 double rotate_x=0;
+bool flag = false;
 
 double stX = 0.0, stY = 0.0;
 
 double startX = -0.5, startY = -0.5, startZ = -0.5;
+
+double bondI = 0.0;
 	
-std :: vector<int> KeyDown(256);;
+std :: vector<int> KeyDown(256);
+
+int flagStop = true;
+
+void stop()
+{
+	flagStop = false;
+}
 
 void display(){
 
 	//  Clear screen and Z-buffer
 	keyPress();
-	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-	t->forward();
-	b->draw();
-	t->draw();
-	a->drawPicture();
-	s->stepForward();
-	s->draw();
-	b->drawSpeed();
+	if (flagStop)
+	{
+		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+
+		t->forward();
+		b->draw();
+		t->draw();
+		a->drawPicture();
+		s->stepForward();
+		s->draw();
+		b->drawSpeed();
+		b->drawBondBlood();
+
+		glutSwapBuffers();
+	}
+
+	if (!flag && s->isExlosion())
+	{
+		flag = true;
+
+		double shellX = s->getX(),
+			shellY = s->getY(),
+			tankX = t->getX(),
+			tankY = t->getY();
+			
+		std :: cout << setw(10) <<abs(shellX - tankX) << setw(10) << abs(shellY - tankY) << std :: endl;
+
+		stop();
+	}
 
 	Sleep(50);
-
-	glutSwapBuffers();
 }
 
 void key(unsigned char key, int x, int y){
@@ -99,8 +136,42 @@ void keyPress()
 
 void Init()
 {
+	bDistToSize = new double[NdistToSize];
+	cDistToSize = new double[NdistToSize];
+	dDistToSize = new double[NdistToSize];
+
+	bZToY = new double[NZToY];
+	cZToY = new double[NZToY];
+	dZToY = new double[NZToY];
+	int flag;
+
+	double *splineDist = new double[NdistToSize], *splineSize = new double[NdistToSize];
+	double *splineZ = new double[NZToY], *splineY = new double[NZToY];
+
+	memcpy(splineDist,dist,sizeof(dist));
+	memcpy(splineSize,size,sizeof(size));
+
+	memcpy(splineZ,Z,sizeof(Z));
+	memcpy(splineY,Y,sizeof(Y));
+
+	spline(NdistToSize,0,0,0,0,splineDist,splineSize,bDistToSize,cDistToSize,dDistToSize,&flag);
+	if (flag != 0)
+	{
+		std :: cout << "SPLINE FLAG != 0\n";
+		return exit(-1);
+	}
+
+	spline(NdistToSize,0,0,0,0,splineZ,splineY,bZToY,cZToY,dZToY,&flag);
+	if (flag != 0)
+	{
+		std :: cout << "SPLINE FLAG != 0\n";
+		return exit(-1);
+	}
+
 	srand(time(0u));
 	std :: cout << "It's started\n";
+
+	std :: cout << f(5) << std :: endl;
 
 	glClearColor(0.5f,0.5f,0.5f,1.0f);      // Будем очищать экран, заполняя его цветом тумана. ( Изменено )
 
@@ -113,10 +184,22 @@ void Init()
 	a->load();
 	s->load();
 
+	s->setBackgroundPointer(b);
+
 	s->setWindSpeed(b->getWindSpeed());
 	s->setAngleWind(b->getWindAngle());
 
 	t->setSpeed(b->getTankSpeed());
+	t->setCurState(b->getCurTankDir());
+
+	t->setAimRad(a->getRad());
+	t->setDistToSize(bDistToSize, cDistToSize, dDistToSize);
+	t->setSplineMas(splineDist,splineSize);
+
+	s->setDistToSize(bDistToSize, cDistToSize, dDistToSize);
+	s->setSplineMas(splineDist,splineSize);
+
+
 }
 
 void mouse(int but, int st, int x,int y)

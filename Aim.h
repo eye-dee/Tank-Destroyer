@@ -19,6 +19,11 @@ public:
 		y = set;
 	}
 
+	inline double getRad() const
+	{
+		return rad;
+	}
+
 	inline void changeShown()
 	{
 		isShown = !isShown;

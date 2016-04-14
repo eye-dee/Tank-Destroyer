@@ -4,12 +4,14 @@
 
 #include "Fire.h"
 
+#include "spline.h"
+
 #include <conio.h> 
 #include <windows.h>
 #include <iostream>
 #pragma comment(lib, "fmodex_vc.lib")
 
-Shell::Shell() : isFire(false), isExplosion(false),countFire(0)
+Shell::Shell() : isFire(false), isExplosion(false),countFire(0), factor(25.0)
 {
 }
 
@@ -84,8 +86,10 @@ void Shell :: draw()
 	if (isFire && ++countFire > 12)
 	{
 		glPushMatrix();
+		auto hScaled = seval(NdistToSize,z,splineDist, splineSize, bDistToSize, cDistToSize, dDistToSize, &last);
+		std :: cout << hScaled;
 		glTranslated(x,y,0.0);
-		glScaled(10.0,10.0,1.0);
+		glScaled(hScaled*factor,hScaled*factor,0.0);
 
 		glBegin(GL_POLYGON);
 		glColor3d(1.0,0.0,0.0);
@@ -106,5 +110,6 @@ void Shell :: explosion()
 	if (f->draw())
 	{
 		isExplosion = false;
+		setBondBlood();
 	}
 }

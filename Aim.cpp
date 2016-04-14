@@ -4,7 +4,7 @@
 
 Aim :: Aim() : x(250.0),
 	y(250.0),
-	rad(200.0),
+	rad(234.0),
 	isShown(true),
 	wCeil(1.0/10.0),
 	biasX(1.0/100.0),
